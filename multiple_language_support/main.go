@@ -5,7 +5,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-// Localization structure to store error messages and field names
+// Localization structure for error messages and field names
 type Localization struct {
 	Messages   map[string]string
 	FieldNames map[string]string
@@ -45,37 +45,52 @@ var localizations = map[string]Localization{
 	},
 }
 
-// CustomErrorMessage generates localized and dynamic error messages using struct
+// CustomErrorMessage generates a localized error message
 func CustomErrorMessage(err validator.FieldError, lang string) string {
-	// Fallback to English if the specified language is not found
+	// Fallback to English if language is not found
 	localization, ok := localizations[lang]
 	if !ok {
 		localization = localizations["en"]
 	}
 
-	// Get the friendly name for the field, fallback to the original field name if not found
+	// Friendly field name
 	field := localization.FieldNames[err.Field()]
 	if field == "" {
 		field = err.Field()
 	}
 
-	// Get the error message template, fallback to the default message
+	// Error message template
 	messageTemplate := localization.Messages[err.Tag()]
 	if messageTemplate == "" {
 		messageTemplate = localization.Messages["default"]
 	}
 
-	// Return the formatted error message
+	// Format and return the error message
 	if err.Param() != "" {
 		return fmt.Sprintf(messageTemplate, field, err.Param())
 	}
 	return fmt.Sprintf(messageTemplate, field)
 }
 
-func main() {
-	lang := "en"
+// ValidateAndTranslate validates a struct and returns all localized error messages
+func ValidateAndTranslate(data interface{}, lang string) []string {
+	validate := validator.New()
+	err := validate.Struct(data)
+	if err != nil {
+		var errorMessages []string
+		for _, validationErr := range err.(validator.ValidationErrors) {
+			errorMessages = append(errorMessages, CustomErrorMessage(validationErr, lang))
+		}
+		return errorMessages
+	}
+	return nil
+}
 
-	// Define a sample struct to validate
+func main() {
+	// Choose a language
+	lang := "en" // Change to "en" for English
+
+	// Define a struct to validate
 	type User struct {
 		FirstName string `validate:"required,min=3,max=80"`
 		LastName  string `validate:"min=3,max=80"`
@@ -83,24 +98,23 @@ func main() {
 		Password  string `validate:"max=12"`
 	}
 
-	// Sample data with validation errors
+	// Example user data with errors
 	user := User{
-		FirstName: "",                 // Too short
+		FirstName: "porag",            // Missing (required)
 		LastName:  "L",                // Too short
 		Email:     "invalid.com",      // Invalid email
 		Password:  "VeryLongPassword", // Exceeds max length
 	}
 
-	// Initialize the validator
-	validate := validator.New()
-
-	// Validate the struct
-	err := validate.Struct(user)
-	if err != nil {
-		// Iterate over validation errors
-		for _, validationErr := range err.(validator.ValidationErrors) {
-			fmt.Println(CustomErrorMessage(validationErr, lang))
+	// Validate the struct and get error messages
+	errors := ValidateAndTranslate(user, lang)
+	if errors != nil {
+		for _, msg := range errors {
+			fmt.Println(msg)
 		}
-		fmt.Println()
+	} else {
+		fmt.Println("Validation passed!")
 	}
 }
+
+
