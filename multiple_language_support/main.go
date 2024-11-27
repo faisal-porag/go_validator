@@ -19,6 +19,21 @@ var localizations = map[string]Localization{
 			"min":      "The %s must be at least %s characters long.",
 			"max":      "The %s must not exceed %s characters.",
 			"email":    "The %s must be a valid email address.",
+			"len":      "The %s must be exactly %s characters long.",
+			"eq":       "The %s must be equal to %s.",
+			"ne":       "The %s must not be equal to %s.",
+			"gt":       "The %s must be greater than %s.",
+			"gte":      "The %s must be greater than or equal to %s.",
+			"lt":       "The %s must be less than %s.",
+			"lte":      "The %s must be less than or equal to %s.",
+			"alpha":    "The %s must contain only alphabetic characters.",
+			"alphanum": "The %s must contain only alphanumeric characters.",
+			"url":      "The %s must be a valid URL.",
+			"uuid":     "The %s must be a valid UUID.",
+			"datetime": "The %s must match the format %s.",
+			"json":     "The %s must be a valid JSON string.",
+			"numeric":  "The %s must be a numeric value.",
+			"ip":       "The %s must be a valid IP address.",
 			"default":  "The %s is invalid.",
 		},
 		FieldNames: map[string]string{
@@ -34,6 +49,21 @@ var localizations = map[string]Localization{
 			"min":      "%s কমপক্ষে %s অক্ষরের হতে হবে।",
 			"max":      "%s %s অক্ষরের বেশি হতে পারবে না।",
 			"email":    "%s একটি বৈধ ইমেইল হতে হবে।",
+			"len":      "%s অবশ্যই %s অক্ষরের হতে হবে।",
+			"eq":       "%s অবশ্যই %s এর সমান হতে হবে।",
+			"ne":       "%s অবশ্যই %s এর সমান হওয়া যাবে না।",
+			"gt":       "%s অবশ্যই %s এর চেয়ে বড় হতে হবে।",
+			"gte":      "%s অবশ্যই %s এর চেয়ে বড় বা সমান হতে হবে।",
+			"lt":       "%s অবশ্যই %s এর চেয়ে ছোট হতে হবে।",
+			"lte":      "%s অবশ্যই %s এর চেয়ে ছোট বা সমান হতে হবে।",
+			"alpha":    "%s শুধুমাত্র বর্ণমালা অক্ষর ধারণ করতে পারে।",
+			"alphanum": "%s শুধুমাত্র বর্ণমালা এবং সংখ্যা ধারণ করতে পারে।",
+			"url":      "%s একটি বৈধ URL হতে হবে।",
+			"uuid":     "%s একটি বৈধ UUID হতে হবে।",
+			"datetime": "%s অবশ্যই %s ফরম্যাটের সাথে মেলাতে হবে।",
+			"json":     "%s একটি বৈধ JSON স্ট্রিং হতে হবে।",
+			"numeric":  "%s একটি সংখ্যাসূচক মান হতে হবে।",
+			"ip":       "%s একটি বৈধ আইপি ঠিকানা হতে হবে।",
 			"default":  "%s সঠিক নয়।",
 		},
 		FieldNames: map[string]string{
@@ -44,6 +74,7 @@ var localizations = map[string]Localization{
 		},
 	},
 }
+
 
 // CustomErrorMessage generates a localized error message
 func CustomErrorMessage(err validator.FieldError, lang string) string {
