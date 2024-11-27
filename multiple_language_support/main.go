@@ -73,6 +73,7 @@ var localizations = map[string]Localization{
 			"Password":  "পাসওয়ার্ড",
 		},
 	},
+	// Add other languages here ...
 }
 
 
@@ -119,7 +120,7 @@ func ValidateAndTranslate(data interface{}, lang string) []string {
 
 func main() {
 	// Choose a language
-	lang := "en" // Change to "en" for English
+	lang := "en" // Change to "en" for English, "bn" for Bangla
 
 	// Define a struct to validate
 	type User struct {
@@ -140,12 +141,19 @@ func main() {
 	// Validate the struct and get error messages
 	errors := ValidateAndTranslate(user, lang)
 	if errors != nil {
-		for _, msg := range errors {
-			fmt.Println(msg)
+		// Show All Validation Error
+		//for _, msg := range errors {
+		//	fmt.Println(msg)
+		//}
+		// Show Single Error
+		if len(errors) > 0 {
+			fmt.Println(errors[0])
 		}
 	} else {
 		fmt.Println("Validation passed!")
 	}
 }
+
+
 
 
