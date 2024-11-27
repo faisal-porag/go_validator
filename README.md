@@ -60,4 +60,10 @@ func main() {
 }
 ```
 
+### Check multi-language
+
+Navigate to `multiple_language_support` folder
+
+
+
 
