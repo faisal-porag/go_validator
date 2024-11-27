@@ -1,4 +1,4 @@
-module go_validator
+module github.com/faisal-porag/go_validator
 
 go 1.20
 
