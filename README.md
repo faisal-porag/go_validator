@@ -62,7 +62,7 @@ func main() {
 
 ### Check multi-language
 
-Navigate to `multiple_language_support` folder
+Navigate to [Multi-Language Support](https://github.com/faisal-porag/go_validator/blob/master/multiple_language_support/main.go) 
 
 
 
